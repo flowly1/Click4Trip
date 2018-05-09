@@ -1,0 +1,57 @@
+def GetLinesAndNum(fileName):
+	file=open(fileName,"r")
+	lines=file.read().splitlines()
+	file.close()
+	return [lines,len(lines)]
+
+def GetWordsAndSet(sentences):
+	words=[]
+	wordsSet=set()
+	for sen in sentences:
+		senWords=sen.split()
+		for word in senWords:
+			words.append(word)
+			wordsSet.add(word)
+	return [words, wordsSet]
+
+def GetDict(wordSet,words):
+	Dict=dict()
+	for word in wordSet:
+		Dict[word]=0
+	for word in  words:
+		Dict[word]=Dict[word]+1
+	return Dict
+
+def GetDictAndSenNum(file):
+	lines, senNum=GetLinesAndNum(file)
+	words, wordsSet=GetWordsAndSet(lines)
+	Dict=GetDict(wordsSet,words)
+	return [Dict, senNum]
+
+def GetProbDict(file):
+	Dict, senNum=GetDictAndSenNum(file)
+	wordSize=0
+	dictVals=Dict.values()
+	for wordCount in dictVals:
+		wordSize=wordSize+wordCount+1
+	ProbDict=dict()
+	for key in Dict:
+		ProbDict[key]=(Dict[key]+1)/wordSize
+	return [ProbDict, senNum]
+
+def WriteToFile():
+	posProbDict, posSenNum=GetProbDict("pos.txt")
+	negProbDict, negSenNum=GetProbDict("neg.txt")
+	file=open("Dict.txt","w")
+	posProb=posSenNum/(posSenNum+negSenNum)
+	negProb=negSenNum/(posSenNum+negSenNum)
+	file.write("PosProb "+repr(posProb)+"\n")
+	file.write("NegProb "+repr(negProb))
+	for key in posProbDict:
+		file.write("pos "+key+" "+repr(posProbDict[key]))
+	for key in negProbDict:
+		file.write("neg "+key+" "+repr(negProbDict[key]))
+	file.close()
+
+WriteToFile()
+print("Done :D")

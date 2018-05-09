@@ -1,0 +1,16 @@
+Positive reviews checked 100
+Correct: 99
+Incorrect: 1
+Level of Precision: 99.00%
+The reviews that were diagnosed as INCORRECT:
+12  the bathroom was small but very nice
+-------------------------------------------------------------
+
+Negative reviews checked 30
+Correct: 29
+Incorrect: 1
+Level of Precision: 96.67%
+The reviews that were diagnosed as INCORRECT:
+14  the rooms where not easy to access
+-------------------------------------------------------------
+
